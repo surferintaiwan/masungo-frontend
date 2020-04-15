@@ -33,7 +33,7 @@
         />
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Submit</button>
+      <button class="btn btn-lg btn-primary btn-block mb-3" v-bind:disabled="isProcessing" type="submit">Submit</button>
 
       <div class="text-center mb-3">
         <p>
@@ -47,20 +47,49 @@
 </template>
 
 <script>
+import authorizationAPI from '../apis/authorization'
+import {Toast} from '../utils/helpers'
+
 export default {
     data: function () {
         return {
             email: '',
-            password: ''
+            password: '',
+            isProcessing: false
         }
     },
     methods: {
-        handleSubmit() {
-            const data = JSON.stringify({
+        async handleSubmit() {
+            this.isProcessing = true
+            try {
+              if (!this.email || !this.password) {
+                Toast.fire({
+                  type: 'warning',
+                  title: '請輸入email和password'
+                })
+                this.isProcessing = false
+                return
+              }
+              
+              let response = await authorizationAPI.signIn({
                 email: this.email,
                 password: this.password
-            })
-            console.log(data)
+              })
+              const {data} = response
+              localStorage.setItem('token', data.token)
+              
+              this.$router.push('/index')
+            } catch(error) {
+              console.log(error)
+              this.password = ''
+              Toast.fire({
+                type: 'warning',
+                title: '您的帳號或密碼錯誤'
+              })
+              console.log('error', error)
+              this.isProcessing = false
+            }
+            
         }
     }
 }
