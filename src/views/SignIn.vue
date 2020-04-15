@@ -75,9 +75,13 @@ export default {
                 email: this.email,
                 password: this.password
               })
-              const {data} = response
-              localStorage.setItem('token', data.token)
+              const {data, statusText} = response
+              if (statusText !== 'OK') {
+                throw new Error(statusText)
+              }
               
+              this.$store.commit('setCurrentUser', data.user)
+              localStorage.setItem('token', data.token)
               this.$router.push('/index')
             } catch(error) {
               console.log(error)
