@@ -1,7 +1,7 @@
 <template>
     <div class="container py-5">
         <CategoryTabs/>
-        <h1>商品詳細頁</h1>
+        <h1>搜尋結果頁</h1>
     </div>
 </template>
 
