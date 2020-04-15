@@ -19,6 +19,11 @@ Vue.use(VueRouter)
     component: Index
   },
   {
+    path:'/search',
+    name: 'search',
+    component: () => import('../views/Search')
+  },
+  {
     path: '/categories/:categoryName',
     name: 'products-by-category',
     component: () => import('../views/ProductsByCategory')
@@ -106,6 +111,7 @@ Vue.use(VueRouter)
 ]
 
 const router = new VueRouter({
+  linkExactActiveClass: 'active',
   routes
 })
 

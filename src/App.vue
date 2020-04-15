@@ -1,6 +1,6 @@
 <template>
   <div id="masungo-frontend">
-      <Navbar/>
+      <Navbar class="md-5"/>
     <main class="mt-5" role="main">
       <router-view/>
     </main>
