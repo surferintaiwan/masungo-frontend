@@ -115,8 +115,35 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  store.dispatch('fetchCurrentUser')
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem('token')
+  let isAuthenticated = false
+
+  // 不需要驗證的頁面要寫在前面先擋掉，沒有經過這個排除，每一頁都會變成要驗證
+  const pathsWithoutAuthentication = ['index']
+  if (pathsWithoutAuthentication.includes(to.name)) {
+    next()
+    return
+  }
+
+  // 有token，就可以呼叫API去驗證token是否有效
+  if (token) {
+    isAuthenticated = await store.dispatch('fetchCurrentUser')
+  }
+  
+  // 回傳結果是token驗證無效，且他想去的頁面不是'sign-in'的話，才會轉到'sign-in'，反之，如果他是想去'sign-in'頁面，就不幫他再跳轉'sign-in'一次。
+  // 如果不多判斷這個'sign-in'會造成無限迴圈。
+  if (!isAuthenticated && to.name !== 'sign-in') {
+    next('/signin')
+    return
+  }
+
+  // 如果token驗證有效，而且他想去的是'sign-in'的話，不要顯示'sign-in了，直接讓他回首頁。
+  if(isAuthenticated && to.name === 'sign-in') {
+    next('/index')
+    return
+  }
+  
   next()
 })
 export default router

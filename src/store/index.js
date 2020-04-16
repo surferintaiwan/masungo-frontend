@@ -33,7 +33,7 @@ export default new Vuex.Store({
         try {
           const response = await usersAPI.getCurrentUser()
           const {data, statusText} = response
-          console.log('111111',response)
+
           if (statusText !== 'OK') {
             throw new Error(statusText)
           }
@@ -44,10 +44,11 @@ export default new Vuex.Store({
             image: data.user.image,
             isAdmin: data.user.isAdmin
           })
-
+          return true
         } catch(error) {
           console.log('error', error)
           console.error('無法獲取使用者資訊')
+          return false
         }
       }
   },
