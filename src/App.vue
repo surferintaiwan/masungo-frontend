@@ -1,8 +1,9 @@
 <template>
   <div id="masungo-frontend">
-      <Navbar class="md-5"/>
+    <Navbar />
+    <CategoryTabs />
     <main class="mt-5" role="main">
-      <router-view/>
+      <router-view />
     </main>
   </div>
 </template>
@@ -11,11 +12,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import Navbar from './components/NavBar'
+import CategoryTabs from './components/CategoryTabs'
 
 export default {
   name: 'App',
   components: {
-    Navbar
-  }
+    Navbar,
+    CategoryTabs,
+  },
 }
-</script>>
+</script>
+>
