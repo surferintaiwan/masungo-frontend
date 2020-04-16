@@ -36,7 +36,6 @@ export default new Vuex.Store({
         try {
           const response = await usersAPI.getCurrentUser()
           const {data, statusText} = response
-
           if (statusText !== 'OK') {
             throw new Error(statusText)
           }
@@ -44,7 +43,6 @@ export default new Vuex.Store({
             id: data.user.id,
             name: data.user.name,
             email: data.user.email,
-            image: data.user.image,
             isAdmin: data.user.isAdmin
           })
           return true

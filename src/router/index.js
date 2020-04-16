@@ -136,8 +136,9 @@ router.beforeEach(async (to, from, next) => {
   const tokenInStore = store.state.token
   let isAuthenticated = store.state.isAuthenticated
   // 不需要驗證的頁面要寫在前面先擋掉，沒有經過這個排除，每一頁都會變成要驗證
-  const pathsWithoutAuthentication = ['index']
+  const pathsWithoutAuthentication = ['index', 'sign-up', 'search', 'products-by-category', 'product-detail', 'cart']
   if (pathsWithoutAuthentication.includes(to.name)) {
+    await store.dispatch('fetchCurrentUser')
     next()
     return
   }
@@ -148,12 +149,9 @@ router.beforeEach(async (to, from, next) => {
   // 如果瀏覽器的token是空的，就跳過這段往下了；如果瀏覽器的token是有的，就讓他去API判斷。
   // 再如果瀏覽器的token跟state裡的token不同，就去問問看API這個瀏覽器token究竟還有沒有效
   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
-    console.log('經過驗證')
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
-  console.log('here', isAuthenticated)
-  console.log(from.name)
-  console.log(to.name)
+
   // 回傳結果是token驗證無效，且他想去的頁面不是'sign-in'的話，才會轉到'sign-in'，反之，如果他是想去'sign-in'頁面，就不幫他再跳轉'sign-in'一次。
   // 如果不多判斷這個'sign-in'會造成無限迴圈。
   if (!isAuthenticated && to.name !== 'sign-in') {
