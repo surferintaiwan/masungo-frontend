@@ -79,9 +79,9 @@ export default {
               if (statusText !== 'OK') {
                 throw new Error(statusText)
               }
+              localStorage.setItem('token', data.token)
               
               this.$store.commit('setCurrentUser', data.user)
-              localStorage.setItem('token', data.token)
               this.$router.push('/index')
             } catch(error) {
               console.log(error)

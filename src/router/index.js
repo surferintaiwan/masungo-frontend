@@ -116,9 +116,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const token = localStorage.getItem('token')
+  const tokenInLocalStorage = localStorage.getItem('token')
+  const tokenInStore = store.state.token
   let isAuthenticated = false
-
   // 不需要驗證的頁面要寫在前面先擋掉，沒有經過這個排除，每一頁都會變成要驗證
   const pathsWithoutAuthentication = ['index']
   if (pathsWithoutAuthentication.includes(to.name)) {
@@ -126,24 +126,25 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
-  // 有token，就可以呼叫API去驗證token是否有效
-  if (token) {
+  // 因為state裡存的token絕對是驗證過的，所以可以用來跟瀏覽器的token比較，一比就知道使用者瀏覽器上的token是不是有問題的
+  // 如果瀏覽器的token是空的，就跳過這段往下了；如果瀏覽器的token是有的，就讓他去API判斷。
+  // 再如果瀏覽器的token跟state裡的token不同，就去問問看API這個瀏覽器token究竟還有沒有效
+  if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
-  
+
   // 回傳結果是token驗證無效，且他想去的頁面不是'sign-in'的話，才會轉到'sign-in'，反之，如果他是想去'sign-in'頁面，就不幫他再跳轉'sign-in'一次。
   // 如果不多判斷這個'sign-in'會造成無限迴圈。
   if (!isAuthenticated && to.name !== 'sign-in') {
     next('/signin')
     return
   }
-
+  console.log(to.name)
   // 如果token驗證有效，而且他想去的是'sign-in'的話，不要顯示'sign-in了，直接讓他回首頁。
   if(isAuthenticated && to.name === 'sign-in') {
     next('/index')
     return
   }
-  
   next()
 })
 export default router
