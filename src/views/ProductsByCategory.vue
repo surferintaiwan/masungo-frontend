@@ -1,13 +1,7 @@
 <template>
     <div class="container py-5">
-        <CategoryTabs />
         <p>麵包屑 商品大分類>商品中分類>商品小分類</p>
-
-        <select
-            name="brand"
-            class="form-control form-control-lg"
-            v-on:change="handleClick($event)"
-        >
+        <select name="brand" v-on:change="handleClick($event)">
             <option value="1">
                 Nike
             </option>
@@ -43,12 +37,8 @@
 </template>
 
 <script>
-import CategoryTabs from '../components/CategoryTabs'
 import productsAPI from '../apis/products'
 export default {
-    components: {
-        CategoryTabs
-    },
     data() {
         return {
             products: []
@@ -62,6 +52,7 @@ export default {
             try {
                 let response = await productsAPI.getProductsByCategory(query)
                 const { data, statusText } = response
+                console.log('response', response)
                 this.products = data.products
                 if (statusText !== 'OK') {
                     throw new Error(statusText)
@@ -74,7 +65,15 @@ export default {
             const brandId = event.target.value
             const query = this.$route.query
             query['brandId'] = brandId
-            this.getProductsByCategory(query)
+
+            console.log(query)
+            console.log(666)
+            // this.getProductsByCategory(query)
+            this.$router.push({
+                name: 'products-by-category',
+                // query: { brandId: 1, category1Id: 1 }
+                query
+            })
         }
     },
     beforeRouteUpdate(to, from, next) {

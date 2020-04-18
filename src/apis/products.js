@@ -8,19 +8,13 @@ export default {
         })
     },
     getCategories() {
-        return apiHelper.get('/getallcategories', {
-            headers: { Authorization: `Bearer ${getToken()}` }
-        })
+        return apiHelper.get('/getallcategories')
     },
     getProductsByCategory(whereQuery) {
         const searchParams = new URLSearchParams(whereQuery)
-        return apiHelper.get(`/categories?${searchParams.toString()}`, {
-            headers: { Authorization: `Bearer ${getToken()}` }
-        })
+        return apiHelper.get(`/categories?${searchParams.toString()}`)
     },
     getProductDetail({ productId }) {
-        return apiHelper.get(`/products/${productId}`, {
-            headers: { Authorization: `Bearer ${getToken()}` }
-        })
+        return apiHelper.get(`/products/${productId}`)
     }
 }
