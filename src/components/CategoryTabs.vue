@@ -1,16 +1,18 @@
 <template>
-    <ul class="nav nav-tabs mb-4">
-        <li v-for="tab in tabs" v-bind:key="tab.id" class="nav-item">
-            <router-link
-                v-bind:to="{
-                    name: 'products-by-category',
-                    query: { category1Id: tab.id }
-                }"
-                class="nav-link"
-                >{{ tab.name }}</router-link
-            >
-        </li>
-    </ul>
+    <div class="container pt-5">
+        <ul class="nav nav-tabs">
+            <li v-for="tab in tabs" v-bind:key="tab.id" class="nav-item">
+                <router-link
+                    v-bind:to="{
+                        name: 'products-by-category',
+                        query: { category1Id: tab.id }
+                    }"
+                    class="nav-link"
+                    >{{ tab.name }}</router-link
+                >
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>

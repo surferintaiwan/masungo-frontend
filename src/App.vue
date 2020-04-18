@@ -1,11 +1,11 @@
 <template>
-  <div id="masungo-frontend">
-    <Navbar />
-    <CategoryTabs />
-    <main class="mt-5" role="main">
-      <router-view />
-    </main>
-  </div>
+    <div id="masungo-frontend">
+        <Navbar />
+        <main class="mt-5" role="main">
+            <CategoryTabs />
+            <router-view />
+        </main>
+    </div>
 </template>
 
 <script>
@@ -15,11 +15,11 @@ import Navbar from './components/NavBar'
 import CategoryTabs from './components/CategoryTabs'
 
 export default {
-  name: 'App',
-  components: {
-    Navbar,
-    CategoryTabs,
-  },
+    name: 'App',
+    components: {
+        Navbar,
+        CategoryTabs
+    }
 }
 </script>
 >

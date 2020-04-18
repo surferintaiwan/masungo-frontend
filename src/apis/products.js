@@ -17,5 +17,10 @@ export default {
         return apiHelper.get(`/categories?${searchParams.toString()}`, {
             headers: { Authorization: `Bearer ${getToken()}` }
         })
+    },
+    getProductDetail({ productId }) {
+        return apiHelper.get(`/products/${productId}`, {
+            headers: { Authorization: `Bearer ${getToken()}` }
+        })
     }
 }
