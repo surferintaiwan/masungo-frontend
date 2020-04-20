@@ -8,6 +8,6 @@ export default {
         return apiHelper.post('/cart', { cartId, productId, amount })
     },
     deleteCartItem({ cartId, productId }) {
-        return apiHelper.delete('/cart', { cartId, productId })
+        return apiHelper.delete('/cart', { params: { cartId, productId } })
     }
 }

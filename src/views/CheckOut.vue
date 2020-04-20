@@ -1,5 +1,121 @@
 <template>
-    <div>
-        <h1>結帳頁</h1>
-    </div>
+  <div class="container py-5">
+    <h1>結帳頁</h1>
+    <CartTable v-bind:cart="cart" v-bind:totalPrice="totalPrice" />
+    <form v-on:submit.stop.prevent="handleSubmit">
+      <div class="form-group">
+        <label for="address">收件地址:</label>
+        <input type="text" class="form-control" id="address" name="address" required />
+      </div>
+      <div class="form-group">
+        <label for="receiver">收件人:</label>
+        <input type="text" class="form-control" id="receiver" name="receiver" required />
+      </div>
+      <div class="form-group">
+        運送方式:
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="deliveryMethodId"
+            id="storePickUp"
+            value="1"
+            required
+          />
+          <label class="form-check-label" for="storePickUp">超商取貨</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="deliveryMethodId"
+            id="homeDelivery"
+            value="2"
+          />
+          <label class="form-check-label" for="homeDelivery">宅配</label>
+        </div>
+      </div>
+      <div class="form-group">
+        付款方式:
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="paymentMethodId"
+            id="creditCart"
+            value="1"
+            required
+          />
+          <label class="form-check-label" for="creditCart">信用卡</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="paymentMethodId" id="ATM" value="2" />
+          <label class="form-check-label" for="ATM">ATM</label>
+        </div>
+      </div>
+      <input name="amount" type="text" v-bind:value="totalPrice" hidden />
+      <input name="cartId" type="text" v-bind:value="cart.id" hidden />
+      <button type="submit" class="btn btn-primary">送出訂單</button>
+    </form>
+  </div>
 </template>
+
+<script>
+import CartTable from "../components/CartTable";
+import cartsAPI from "../apis/carts";
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+
+export default {
+  data() {
+    return {
+      cart: {},
+      totalPrice: 0
+    };
+  },
+  created() {
+    this.getCartItems();
+  },
+  components: {
+    CartTable
+  },
+  methods: {
+    async getCartItems() {
+      try {
+        // 取出存在瀏覽器的cartId送去給API
+        const cartId = localStorage.getItem("cartId");
+        let response = await cartsAPI.getCartItems({ cartId });
+        const { data, statusText } = response;
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.cart = data.cart;
+        this.totalPrice = data.totalPrice;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得購物車資料"
+        });
+      }
+    },
+    async handleSubmit(event) {
+      try {
+        const form = event.target;
+        const formData = new FormData(form);
+        let response = await usersAPI.createOrder({ formData });
+        const { data, statusText } = response;
+        if ((data.status !== "success", statusText !== "OK")) {
+          throw new Error(statusText);
+        }
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "建立訂單失敗"
+        });
+      }
+    }
+  }
+};
+</script>
