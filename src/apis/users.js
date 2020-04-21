@@ -8,12 +8,5 @@ export default {
                 Authorization: `Bearer ${getToken()}`
             }
         })
-    },
-    createOrder({ formData }) {
-        return apiHelper.post('/checkout', formData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        })
     }
 }

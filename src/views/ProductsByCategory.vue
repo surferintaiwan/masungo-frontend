@@ -11,7 +11,9 @@
           <img v-bind:src="product.image1" class="card-img-top" alt />
 
           <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
+            <router-link v-bind:to="{name: 'product-detail', params: {productId: product.id}}">
+              <h5 class="card-title">{{ product.name }}</h5>
+            </router-link>
             <p>NT. {{ product.sellingPrice }}</p>
             <a href="#" class="btn btn-primary">直接購買</a>
             <form action>
