@@ -23,13 +23,8 @@
         <!-- is user is login -->
         <template v-if="isAuthenticated">
           <router-link to="#" class="text-white mr-3">{{ currentUser.name }} 您好</router-link>
-          <router-link to="#" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">會員中心</router-link>
+          <router-link to="/member" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">會員中心</router-link>
           <router-link to="/cart" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">購物車</router-link>
-          <button
-            type="button"
-            class="btn btn-sm btn-outline-success my-2 my-sm-0"
-            v-on:click="logout"
-          >登出</button>
         </template>
       </div>
     </div>
@@ -42,12 +37,6 @@ export default {
   name: "Navbar",
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
-  },
-  methods: {
-    logout() {
-      this.$store.commit("revokeAuthentication");
-      this.$router.push("/signin");
-    }
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div class="container py-5">
+    <MemberTabs />
     <h1>訂單總表</h1>
     <div v-for="order in orders" v-bind:key="order.id" class="md-4">
       <h6>訂單編號 {{order.id}}</h6>
@@ -39,9 +40,13 @@
 
 <script>
 import usersAPI from "../apis/users";
+import MemberTabs from "../components/MemberTabs";
 import { Toast } from "../utils/helpers";
 
 export default {
+  components: {
+    MemberTabs
+  },
   data() {
     return {
       orders: []

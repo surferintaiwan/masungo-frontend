@@ -57,14 +57,24 @@ const routes = [
         component: () => import('../views/CheckOutPayment')
     },
     {
+        path: '/member',
+        name: 'member-index',
+        redirect: '/member/orders'
+    },
+    {
         path: '/member/orders',
-        name: 'orders',
-        component: () => import('../views/Orders')
+        name: 'member-orders',
+        component: () => import('../views/MemberOrders')
+    },
+    {
+        path: '/member/edit',
+        name: 'member-edit',
+        component: () => import('../views/MemberEdit')
     },
     {
         path: '/member/followings',
         name: 'followings',
-        component: () => import('../views/Followings')
+        component: () => import('../views/MemberFollowings')
     },
     {
         path: '/signin',
