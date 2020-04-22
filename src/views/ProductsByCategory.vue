@@ -17,7 +17,7 @@
             <p>NT. {{ product.sellingPrice }}</p>
             <a href="#" class="btn btn-primary">直接購買</a>
             <form action>
-              <button class="btn btn-primary">加入購物車</button>
+              <button type="submit" class="btn btn-primary">加入購物車</button>
             </form>
           </div>
         </div>

@@ -27,17 +27,17 @@
               <input type="text" value v-model="amount" />
               <button v-on:click="deleteAmount">-</button>
             </div>
-            <!-- <form v-on:submit.stop.prevent="">
-              <input type="text" name="cartId" hidden />
-            <input type="text" name="productId" v-bind:value="product.id" hidden />-->
             <button
               type="submit"
               class="btn btn-info mr-2"
               v-on:click="addCartItem(product.id)"
             >加入購物車</button>
-            <!-- </form> -->
-
-            <button class="btn btn-warning">加入追蹤</button>
+            <button
+              v-if="product.isFollowed"
+              class="btn btn-warning"
+              v-on:click="handleDelete(product.id)"
+            >取消追蹤</button>
+            <button v-else class="btn btn-warning" v-on:click="handleAdd(product.id)">加入追蹤</button>
           </div>
         </div>
       </div>
@@ -60,8 +60,10 @@
 
 <script>
 import productsAPI from "../apis/products";
-import cartAPI from "../apis/carts";
+import cartsAPI from "../apis/carts";
+import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+
 export default {
   data() {
     return {
@@ -102,7 +104,7 @@ export default {
       try {
         // 取出瀏覽器上的cartId，如果瀏覽器上沒有會是null，打給API會產生新的cartId
         const cartId = localStorage.getItem("cartId");
-        let response = await cartAPI.addCartItem({
+        let response = await cartsAPI.addCartItem({
           cartId: cartId,
           productId: productId,
           amount: this.amount
@@ -125,6 +127,46 @@ export default {
           title: "無法加入購物車"
         });
         console.log(error);
+      }
+    },
+    async handleAdd(productId) {
+      try {
+        let response = await usersAPI.addFollowingProduct({ productId });
+        const { data, statusText } = response;
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error(statusText);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "追蹤成功"
+        });
+        // 把按鍵更新
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法加入追蹤清單"
+        });
+      }
+    },
+    async handleDelete(productId) {
+      try {
+        let response = await usersAPI.deleteFollowingProduct({ productId });
+        const { data, statusText } = response;
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error(statusText);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "移除追蹤成功"
+        });
+        // 把按鍵更新
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將商品自追蹤清單移除"
+        });
       }
     }
   },

@@ -15,5 +15,23 @@ export default {
                 Authorization: `Bearer ${getToken()}`
             }
         })
+    },
+    addFollowingProduct({ productId }) {
+        return apiHelper.post(
+            `/products/${productId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        )
+    },
+    deleteFollowingProduct({ productId }) {
+        return apiHelper.delete(`/products/${productId}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
     }
 }
