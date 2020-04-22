@@ -31,7 +31,6 @@ export default {
       try {
         let response = await productsAPI.getCategories();
         const { statusText, data } = response;
-        console.log(data);
         if (statusText !== "OK") {
           throw new Error(statusText);
         }

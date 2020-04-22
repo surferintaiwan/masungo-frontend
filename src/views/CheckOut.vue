@@ -1,7 +1,11 @@
 <template>
     <div class="container py-5">
         <h1>結帳頁</h1>
-        <CartTable v-bind:cart="cart" v-bind:totalPrice="totalPrice" />
+        <CartTable
+            v-bind:cart="cart"
+            v-bind:totalPrice="totalPrice"
+            v-bind:canDelete="canDelete"
+        />
         <form v-on:submit.stop.prevent="handleSubmit">
             <div class="form-group">
                 <label for="address">收件地址:</label>
@@ -94,7 +98,8 @@ export default {
     data() {
         return {
             cart: {},
-            totalPrice: 0
+            totalPrice: 0,
+            canDelete: false // 這資料是為了帶去給元件，把delete按鍵移除
         }
     },
     created() {

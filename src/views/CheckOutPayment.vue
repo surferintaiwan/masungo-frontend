@@ -60,6 +60,7 @@
 
 <script>
 import ordersAPI from '../apis/orders'
+import { Toast } from '../utils/helpers'
 export default {
     data() {
         return {
@@ -72,12 +73,21 @@ export default {
     },
     methods: {
         async getPayment() {
-            const orderId = this.$route.params.orderId
-            let response = await ordersAPI.getPayment({ orderId })
-            const { data, statusText } = response
-            this.orderAmount = data.orderAmount
-            this.finalTradeInfo = data.finalTradeInfo
-            console.log(data, statusText)
+            try {
+                const orderId = this.$route.params.orderId
+                let response = await ordersAPI.getPayment({ orderId })
+                const { data, statusText } = response
+                if (statusText !== 'OK') {
+                    throw new Error(statusText)
+                }
+                this.orderAmount = data.orderAmount
+                this.finalTradeInfo = data.finalTradeInfo
+            } catch (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: '無法獲取付款資料'
+                })
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
         <th scope="col">售價</th>
         <th scope="col">數量</th>
         <th scope="col">小計</th>
-        <th scope="col">刪除</th>
+        <th scope="col" v-if="canDelete">刪除</th>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
         <td>{{ cartItem.Product.sellingPrice }}</td>
         <td>{{ cartItem.quantity }}</td>
         <td>{{ cartItem.Product.sellingPrice * cartItem.quantity }}</td>
-        <td>
+        <td v-if="canDelete">
           <button class="btn btn-info" v-on:click="deleteCartItem(cartItem.Product.id)">刪除</button>
         </td>
       </tr>
@@ -46,6 +46,10 @@ export default {
     totalPrice: {
       type: Number,
       required: true
+    },
+    canDelete: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -54,4 +58,5 @@ export default {
     }
   }
 };
-</script>>
+</script>
+>
