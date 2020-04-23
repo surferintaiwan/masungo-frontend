@@ -9,6 +9,13 @@ export default {
             }
         })
     },
+    updateUser(formData) {
+        return apiHelper.put('/member/edit', formData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
+    },
     getOrders() {
         return apiHelper.get('/member/orders', {
             headers: {
@@ -29,6 +36,13 @@ export default {
     },
     deleteFollowingProduct({ productId }) {
         return apiHelper.delete(`/products/${productId}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
+    },
+    getFollowingProducts() {
+        return apiHelper.get('/member/followings', {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
