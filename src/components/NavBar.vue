@@ -1,6 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-    <router-link class="navbar-brand" to="/">馬上購</router-link>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-white">
+    <router-link to="/">
+      <img src="../../public/logo.png" alt="馬上購LOGO" />
+    </router-link>
     <form action="/search">
       <div class="input-group mb-3">
         <input
@@ -19,10 +21,10 @@
     <div id="navbarSupportedContent" class="navbar-collapse collapse">
       <div class="ml-auto d-flex align-items-center">
         <!-- is user is admin -->
-        <router-link to="#" class="text-white mr-3" v-if="currentUser.isAdmin">管理員後台</router-link>
+        <router-link to="/admin" class="text-secondary mr-3" v-if="currentUser.isAdmin">管理員後台</router-link>
         <!-- is user is login -->
         <template v-if="isAuthenticated">
-          <router-link to="#" class="text-white mr-3">{{ currentUser.name }} 您好</router-link>
+          <router-link to="#" class="text-secondary mr-3">{{ currentUser.name }} 您好</router-link>
           <router-link to="/member" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">會員中心</router-link>
           <router-link to="/cart" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">購物車</router-link>
         </template>

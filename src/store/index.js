@@ -13,7 +13,8 @@ export default new Vuex.Store({
             isAdmin: false
         },
         isAuthenticated: false,
-        token: ''
+        token: '',
+        wantToGoAdminPage: false
     },
     mutations: {
         setCurrentUser(state, currentUser) {
@@ -29,6 +30,12 @@ export default new Vuex.Store({
             state.isAuthenticated = false
             state.token = ''
             localStorage.removeItem('token')
+        },
+        setWantToGoAdminPage(state) {
+            state.wantToGoAdminPage = true
+        },
+        deleteWantToGoAdminPage(state) {
+            state.wantToGoAdminPage = false
         }
     },
     actions: {
@@ -54,6 +61,12 @@ export default new Vuex.Store({
                 commit('revokeAuthentication')
                 return false
             }
+        },
+        setWantToGoAdminPage({ commit }) {
+            commit('setWantToGoAdminPage')
+        },
+        deleteWantToGoAdminPage({ commit }) {
+            commit('deleteWantToGoAdminPage')
         }
     },
     modules: {}

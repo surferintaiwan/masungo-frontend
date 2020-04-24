@@ -13,6 +13,7 @@ const authorizeIsAdmin = (to, from, next) => {
         next('/404')
         return
     }
+    next()
 }
 
 const routes = [
@@ -100,13 +101,13 @@ const routes = [
     },
     {
         path: '/admin/products',
-        name: 'admin-index',
+        name: 'admin-products',
         component: () => import('../views/admin/Products'),
         beforeEnter: authorizeIsAdmin
     },
     {
         path: '/admin/products/new',
-        name: 'admin-index',
+        name: 'admin-product-new',
         component: () => import('../views/admin/ProductNew'),
         beforeEnter: authorizeIsAdmin
     },
@@ -132,6 +133,12 @@ const routes = [
         path: '/admin/orders',
         name: 'admin-orders',
         component: () => import('../views/admin/Orders'),
+        beforeEnter: authorizeIsAdmin
+    },
+    {
+        path: '/admin/members',
+        name: 'admin-members',
+        component: () => import('../views/admin/Members'),
         beforeEnter: authorizeIsAdmin
     },
     {
@@ -183,6 +190,13 @@ router.beforeEach(async (to, from, next) => {
         next('/index')
         return
     }
+    // 如果要去的頁面是admin相關的，就把Vuex那邊的wantToGoAdminPage存成true
+    if (to.name.includes('admin')) {
+        store.dispatch('setWantToGoAdminPage')
+    } else {
+        store.dispatch('deleteWantToGoAdminPage')
+    }
+
     next()
 })
 export default router
