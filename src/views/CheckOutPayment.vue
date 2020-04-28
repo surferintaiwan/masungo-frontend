@@ -7,47 +7,43 @@
 
     <form name="Newebpay" v-bind:action="finalTradeInfo.PayGateWay" method="POST">
       <div class="form-group">
-        <label for="MerchantID">MerchantID:</label>
         <input
           name="MerchantID"
-          type="text"
+          type="hidden"
           class="form-control"
           id="MerchantID"
-          disabled
           v-bind:value="finalTradeInfo.MerchantID"
+          hidden
         />
       </div>
       <div class="form-group">
-        <label for="TradeInfo">TradeInfo:</label>
         <input
           name="TradeInfo"
           type="text"
           class="form-control"
           id="TradeInfo"
-          disabled
           v-bind:value="finalTradeInfo.TradeInfo"
+          hidden
         />
       </div>
       <div class="form-group">
-        <label for="TradeSha">TradeSha:</label>
         <input
           name="TradeSha"
           type="text"
           class="form-control"
           id="TradeSha"
-          disabled
           v-bind:value="finalTradeInfo.TradeSha"
+          hidden
         />
       </div>
       <div class="form-group">
-        <label for="Version">Version:</label>
         <input
           name="Version"
           type="text"
           class="form-control"
           id="Version"
-          disabled
           v-bind:value="finalTradeInfo.Version"
+          hidden
         />
         <button type="submit" class="btn btn-primary">進行付款</button>
       </div>

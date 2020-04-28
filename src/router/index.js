@@ -119,6 +119,12 @@ const routes = [
     },
     {
         path: '/admin/products/:productId/edit',
+        name: 'admin-product-edit',
+        component: () => import('../views/admin/ProductEdit'),
+        beforeEnter: authorizeIsAdmin
+    },
+    {
+        path: '/admin/products/:productId/edit',
         name: 'admin-index',
         component: () => import('../views/admin/ProductEdit'),
         beforeEnter: authorizeIsAdmin
@@ -157,6 +163,14 @@ router.beforeEach(async (to, from, next) => {
     const tokenInLocalStorage = localStorage.getItem('token')
     const tokenInStore = store.state.token
     let isAuthenticated = store.state.isAuthenticated
+
+    // 如果要去的頁面是admin相關的，就把Vuex那邊的wantToGoAdminPage存成true
+    if (to.name.includes('admin')) {
+        store.dispatch('setWantToGoAdminPage')
+    } else {
+        store.dispatch('deleteWantToGoAdminPage')
+    }
+
     // 不需要驗證的頁面要寫在前面先擋掉，沒有經過這個排除，每一頁都會變成要驗證
     const pathsWithoutAuthentication = [
         'index',
@@ -189,12 +203,6 @@ router.beforeEach(async (to, from, next) => {
     if (isAuthenticated && to.name === 'sign-in') {
         next('/index')
         return
-    }
-    // 如果要去的頁面是admin相關的，就把Vuex那邊的wantToGoAdminPage存成true
-    if (to.name.includes('admin')) {
-        store.dispatch('setWantToGoAdminPage')
-    } else {
-        store.dispatch('deleteWantToGoAdminPage')
     }
 
     next()
