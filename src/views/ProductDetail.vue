@@ -102,6 +102,7 @@ export default {
     },
     async addCartItem(productId) {
       try {
+        this.isProcessing = true;
         // 取出瀏覽器上的cartId，如果瀏覽器上沒有會是null，打給API會產生新的cartId
         const cartId = localStorage.getItem("cartId");
         let response = await cartsAPI.addCartItem({
@@ -121,16 +122,19 @@ export default {
           type: "success",
           title: "已將本商品加入購物車"
         });
+        this.isProcessing = false;
       } catch (error) {
         Toast.fire({
           icon: "error",
           title: "無法加入購物車"
         });
+        this.isProcessing = false;
         console.log(error);
       }
     },
     async handleAdd(productId) {
       try {
+        this.isProcessing = true;
         let response = await usersAPI.addFollowingProduct({ productId });
         const { data, statusText } = response;
         if (statusText !== "OK" || data.status !== "success") {
@@ -140,17 +144,20 @@ export default {
           icon: "success",
           title: "追蹤成功"
         });
-        // 把按鍵更新
+        this.product.isFollowed = true;
+        this.isProcessing = false;
       } catch (error) {
         console.log(error);
         Toast.fire({
           icon: "error",
           title: "無法加入追蹤清單"
         });
+        this.isProcessing = false;
       }
     },
     async handleDelete(productId) {
       try {
+        this.isProcessing = true;
         let response = await usersAPI.deleteFollowingProduct({ productId });
         const { data, statusText } = response;
         if (statusText !== "OK" || data.status !== "success") {
@@ -160,13 +167,15 @@ export default {
           icon: "success",
           title: "移除追蹤成功"
         });
-        // 把按鍵更新
+        this.product.isFollowed = false;
+        this.isProcessing = false;
       } catch (error) {
         console.log(error);
         Toast.fire({
           icon: "error",
           title: "無法將商品自追蹤清單移除"
         });
+        this.isProcessing = false;
       }
     }
   },
