@@ -1,6 +1,5 @@
 <template>
-  <div>
+  <div class="container py-5">
     <h1>後台首頁</h1>
-    <router-link to="/">點</router-link>
   </div>
 </template>

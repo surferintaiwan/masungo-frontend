@@ -24,7 +24,7 @@
         <router-link to="/admin" class="text-secondary mr-3" v-if="currentUser.isAdmin">管理員後台</router-link>
         <!-- is user is login -->
         <template v-if="isAuthenticated">
-          <router-link to="#" class="text-secondary mr-3">{{ currentUser.name }} 您好</router-link>
+          <router-link to="#" class="text-secondary mr-3">{{ currentUser.name }}，您好</router-link>
           <router-link to="/member" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">會員中心</router-link>
           <router-link to="/cart" class="btn btn-sm btn-outline-success my-2 my-sm-0 mr-2">購物車</router-link>
         </template>

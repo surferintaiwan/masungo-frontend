@@ -4,17 +4,17 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="row">
-          <img class="col-sm-12 py-2" src="http://lorempixel.com/640/480" alt style />
+          <img class="col-sm-12 py-2" v-bind:src="product.image1" alt style />
 
-          <img class="col-sm-4" src="http://lorempixel.com/640/480" alt style />
-          <img class="col-sm-4" src="http://lorempixel.com/640/480" alt style />
-          <img class="col-sm-4" src="http://lorempixel.com/640/480" alt style />
+          <img class="col-sm-4" v-bind:src="product.image2" alt style />
+          <img class="col-sm-4" v-bind:src="product.image3" alt style />
+          <img class="col-sm-4" v-bind:src="product.image4" alt style />
         </div>
       </div>
       <div class="col-sm-6">
         <div class="card" style>
           <div class="card-body">
-            <p>{{ product.Brand.name }}</p>
+            <p>{{ product.Brand ? product.Brand.name: null }}</p>
             <h3 class="card-title">{{ product.name }}</h3>
             <h5 class="card-subtitle mb-2 text-muted">
               <span style="color: green">NT {{product.sellingPrice}}</span>
@@ -44,15 +44,15 @@
 
       <div class="col-sm-12">
         <h3>產品介紹</h3>
-        <p>{{ product.detail }}</p>
+        <img class="col-sm-12 py-2" v-bind:src="product.detail" style="width: 600px" />
       </div>
       <div class="col-sm-12">
         <h3>運送須知</h3>
-        <p>{{ product.deliveryKnow }}</p>
+        <img class="col-sm-12 py-2" v-bind:src="product.deliveryKnow" style="width: 600px" />
       </div>
       <div class="col-sm-12">
         <h3>退購須知</h3>
-        <p>{{ product.refundKnow }}</p>
+        <img class="col-sm-12 py-2" v-bind:src="product.refundKnow" style="width: 600px" />
       </div>
     </div>
   </div>
