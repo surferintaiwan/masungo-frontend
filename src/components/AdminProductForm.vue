@@ -2,19 +2,12 @@
   <form v-if="!isLoading" v-on:submit.stop.prevent="handleSubmit">
     <div class="form-group">
       <label for="name">產品名稱(必填)</label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        name="name"
-        required
-        v-bind:value="product.name"
-      />
+      <input type="text" class="form-control" id="name" name="name" required v-model="product.name" />
     </div>
     <div class="form-group">
       <label for="brandId">品牌類別</label>
-      <select id="brandId" class="form-control" name="brandId" v-bind:value="product.BrandId">
-        <option selected disabled>--請選擇--</option>
+      <select id="brandId" class="form-control" name="brandId" v-model="product.BrandId">
+        <option value selected disabled>--請選擇--</option>
         <option v-for="brand in brands" v-bind:key="brand.id" v-bind:value="brand.id">{{brand.name}}</option>
       </select>
     </div>
@@ -25,7 +18,7 @@
         class="form-control"
         id="listPrice"
         name="listPrice"
-        v-bind:value="product.listPrice"
+        v-model="product.listPrice"
       />
     </div>
     <div class="form-group">
@@ -35,7 +28,7 @@
         class="form-control"
         id="sellingPrice"
         name="sellingPrice"
-        v-bind:value="product.sellingPrice"
+        v-model="product.sellingPrice"
       />
     </div>
     <div class="form-group">
@@ -45,7 +38,7 @@
         class="form-control"
         id="inventory"
         name="inventory"
-        v-bind:value="product.inventory"
+        v-model="product.inventory"
       />
     </div>
     <div class="form-group">
@@ -232,9 +225,10 @@
         id="category1Id"
         class="form-control"
         name="category1Id"
-        v-bind:value="product.Category1Id"
+        v-model="product.Category1Id"
+        v-on:change="getCategories($event)"
       >
-        <option selected disabled>--請選擇--</option>
+        <option value disabled>--請選擇--</option>
         <option
           v-for="category1 in category1s"
           v-bind:key="category1.id"
@@ -248,7 +242,8 @@
         id="category2Id"
         class="form-control"
         name="category2Id"
-        v-bind:value="product.Category2Id"
+        v-model="product.Category2Id"
+        v-on:change="getCategories($event)"
       >
         <option value selected disabled>--請選擇--</option>
         <option
@@ -264,7 +259,8 @@
         id="category3Id"
         class="form-control"
         name="category3Id"
-        v-bind:value="product.Category3Id"
+        v-model="product.Category3Id"
+        v-on:change="getCategories($event)"
       >
         <option value selected disabled>--請選擇--</option>
         <option
@@ -304,7 +300,7 @@ export default {
     return {
       product: {
         name: null,
-        BrandId: null,
+        BrandId: "",
         listPrice: 0,
         sellingPrice: 0,
         inventory: 0,
@@ -317,9 +313,9 @@ export default {
         detail: "",
         deliveryKnow: "",
         refundKnow: "",
-        Category1Id: null,
-        Category2Id: null,
-        Category3Id: null
+        Category1Id: "",
+        Category2Id: "",
+        Category3Id: ""
       },
       brands: [],
       category1s: [],
@@ -330,6 +326,7 @@ export default {
   },
   created() {
     this.getAllBrandsAndCategories();
+    this.getCategories("getCategory1s");
   },
   methods: {
     handleFileChange(event) {
@@ -358,9 +355,6 @@ export default {
           throw new Error(statusText);
         }
         this.brands = data.brands;
-        this.category1s = data.category1s;
-        this.category2s = data.category2s;
-        this.category3s = data.category3s;
         this.isLoading = false;
       } catch (error) {
         console.log(error);
@@ -374,6 +368,51 @@ export default {
       const form = event.target;
       const formData = new FormData(form);
       this.$emit("after-submit", formData);
+    },
+    async getCategories(event) {
+      try {
+        // 這一支寫的有點小複雜，主要是因為我想要用同一支去讓created呼叫拿到大分類資訊，並且在大跟中分類被觸發時也可以被呼叫，並進一步分別拿到中跟小分類
+        // 首先判斷event是getCategory1s的，那麼這次呼叫我們，就是為了一開始讓大分類拿到資料在created呼叫我們
+        if (event === "getCategory1s") {
+          const query = {};
+          query[event] = "";
+          let response = await adminsAPI.getCategories(query);
+          const { data, statusText } = response;
+          if (statusText !== "OK") {
+            throw new Error(statusText);
+          }
+          this.category1s = data.category1s;
+        } else {
+          // 否則其他就都會是中分類或小分類的值改變時來呼叫我們，而此時帶進來的event才是DOM裡面的東西
+
+          const query = {};
+          query[event.target.name] = event.target.value;
+          let response = await adminsAPI.getCategories(query);
+          const { data, statusText } = response;
+          if (statusText !== "OK") {
+            throw new Error(statusText);
+          }
+
+          // 接著再判斷是大類觸發的，就帶拿到的資料回去中類；判斷是中類觸發的，就帶拿到的資料回去小類
+          if (event.target.name === "category1Id") {
+            // 如果使用者這次不是第一次點大分類，會因為data裡product裡面還存著選擇的中類以及小類的值
+            // ，導致中類及小類不會是顯示<請選擇>，所以要把中類跟小類原本選的值設成一開始data那邊設的''空字串，才會回到<請選擇>
+            this.product.Category2Id = "";
+            this.product.Category3Id = "";
+            this.category2s = data.category2s;
+          } else if (event.target.name === "category2Id") {
+            // 至於如果使用者不是第一次點中類，我只希望小類顯示<請選擇>而已，所以只更新小類在data裡product的值
+            this.product.Category3Id = "";
+            this.category3s = data.category3s;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法獲取分類資料"
+        });
+      }
     }
   }
 };

@@ -36,5 +36,15 @@ export default {
                 Authorization: `Bearer ${getToken()}`
             }
         })
+    },
+    getCategories(query) {
+        const rebuiltQuery = new URLSearchParams(query)
+        console.log()
+        // 要把name 跟value重新組合，其中要注意如果是created傳進來的，value是undefine，要看組不組的起來，讓後端那邊順利獨到getcategory1s
+        return apiHelper.get(`/admin/categories?${rebuiltQuery.toString()}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
     }
 }
