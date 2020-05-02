@@ -17,7 +17,7 @@
                 v-model="category1Name"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-info">Submit</button>
           </div>
           <div class="col-4"></div>
           <div class="col-4"></div>
@@ -56,7 +56,7 @@
                 v-model="category2Name"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-info">Submit</button>
           </div>
 
           <div class="col-4"></div>
@@ -114,7 +114,7 @@
                 v-model="category3Name"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-info">Submit</button>
           </div>
         </form>
       </div>
