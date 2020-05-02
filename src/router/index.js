@@ -181,7 +181,7 @@ router.beforeEach(async (to, from, next) => {
         'cart'
     ]
     if (pathsWithoutAuthentication.includes(to.name)) {
-        await store.dispatch('fetchCurrentUser')
+        // await store.dispatch('fetchCurrentUser')
         next()
         return
     }

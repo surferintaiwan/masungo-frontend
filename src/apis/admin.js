@@ -57,5 +57,12 @@ export default {
                 }
             }
         )
+    },
+    getAllMembers() {
+        return apiHelper.get('/admin/members', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
     }
 }

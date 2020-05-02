@@ -23,7 +23,7 @@
           <div class="col-4"></div>
         </form>
       </div>
-      <div class="col-12">
+      <div class="col-12 mt-4">
         <h2>新增中分類</h2>
         <form class="row" name="addCategory2" v-on:submit.stop.prevent="handleSubmit">
           <div class="col-4">
@@ -62,7 +62,7 @@
           <div class="col-4"></div>
         </form>
       </div>
-      <div class="col-12">
+      <div class="col-12 mt-4">
         <h2>新增小分類</h2>
         <form class="row" name="addCategory3" v-on:submit.stop.prevent="handleSubmit">
           <div class="col-4">

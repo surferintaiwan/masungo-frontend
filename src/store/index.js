@@ -56,7 +56,6 @@ export default new Vuex.Store({
             } catch (error) {
                 console.log('error', error)
                 console.error('無法獲取使用者資訊')
-
                 // 驗證失敗就觸發登出，讓他把瀏覽器的token跟state裡的token都洗掉。
                 commit('revokeAuthentication')
                 return false
