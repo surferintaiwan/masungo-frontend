@@ -294,6 +294,8 @@ export default {
       this.product = {
         ...product
       };
+      this.getCategories("getCategory2s");
+      this.getCategories("getCategory3s");
     }
   },
   data() {
@@ -371,10 +373,19 @@ export default {
     },
     async getCategories(event) {
       try {
-        // 這一支寫的有點小複雜，主要是因為我想要用同一支去讓created呼叫拿到大分類資訊，並且在大跟中分類被觸發時也可以被呼叫，並進一步分別拿到中跟小分類
-        // 首先判斷event是getCategory1s的，那麼這次呼叫我們，就是為了一開始讓大分類拿到資料在created呼叫我們
+        const query = {};
+        // 這getCategories寫得有點複雜，但其實都是打後端同一支API，只是帶不同的query去給它判斷。
+        // 主要是兩個部分會用到:
+        // ---第一部分---
+        // 商品編輯頁時，拿到所有大類們、拿到該產品大類所屬中類們、拿到該產品中類所屬小類們
+        // if(event === "getCategory1s) if(event === "getCategory2s) if(event === "getCategory3s)這三個前面的判斷就是為了第一部分用的
+        // (這幾次被呼叫的時機都放在了watched那邊，在確定收到ProductEdit傳資料進來時，才開始呼叫我們去拿到該產品所屬的大類們、中類們、小類們
+        // ，至於為何一定要寫在watched，可以仔細看因為會用到this.product.Category1Id跟this.product.Category2Id
+        // ，所以一定要等到收到ProductEdit資料傳進來，我才有產品相關資訊能夠帶參數回去跟後端API要資料。
+        //
+        // ---第二部分---
+        //  在新增商品頁面跟商品編輯頁面，當大類被選擇後有變動時，會帶出相應的中類；當中類被選擇後有變動時，會帶出相應的小類。
         if (event === "getCategory1s") {
-          const query = {};
           query[event] = "";
           let response = await adminsAPI.getCategories(query);
           const { data, statusText } = response;
@@ -382,10 +393,24 @@ export default {
             throw new Error(statusText);
           }
           this.category1s = data.category1s;
+        } else if (event === "getCategory2s") {
+          query["category1Id"] = this.product.Category1Id;
+          let response = await adminsAPI.getCategories(query);
+          const { data, statusText } = response;
+          if (statusText !== "OK") {
+            throw new Error(statusText);
+          }
+          this.category2s = data.category2s;
+        } else if (event === "getCategory3s") {
+          query["category2Id"] = this.product.Category2Id;
+          let response = await adminsAPI.getCategories(query);
+          const { data, statusText } = response;
+          if (statusText !== "OK") {
+            throw new Error(statusText);
+          }
+          this.category3s = data.category3s;
         } else {
-          // 否則其他就都會是中分類或小分類的值改變時來呼叫我們，而此時帶進來的event才是DOM裡面的東西
-
-          const query = {};
+          // 否則其他就都會是大分類或中分類的值改變時來呼叫我們，而此時帶進來的event才是DOM裡面的東西
           query[event.target.name] = event.target.value;
           let response = await adminsAPI.getCategories(query);
           const { data, statusText } = response;
