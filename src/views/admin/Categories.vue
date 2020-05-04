@@ -6,8 +6,8 @@
         <h2>新增大分類</h2>
         <form class="row" name="addCategory1" v-on:submit.stop.prevent="handleSubmit">
           <div class="col-4">
-            <div class="form-group">
-              <label for="category1Id">產品大分類</label>
+            <label for="category1Id">產品大分類</label>
+            <div class="form-inline">
               <input
                 type="text"
                 class="form-control"
@@ -16,8 +16,8 @@
                 name="category1Name"
                 v-model="category1Name"
               />
+              <button type="submit" class="btn btn-info">Submit</button>
             </div>
-            <button type="submit" class="btn btn-info">Submit</button>
           </div>
           <div class="col-4"></div>
           <div class="col-4"></div>
@@ -46,8 +46,8 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="form-group">
-              <label for="category2Id">產品中分類</label>
+            <label for="category2Id">產品中分類</label>
+            <div class="form-inline">
               <input
                 type="text"
                 class="form-control"
@@ -55,8 +55,8 @@
                 name="category2Name"
                 v-model="category2Name"
               />
+              <button type="submit" class="btn btn-info">Submit</button>
             </div>
-            <button type="submit" class="btn btn-info">Submit</button>
           </div>
 
           <div class="col-4"></div>
@@ -104,8 +104,8 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="form-group">
-              <label for="category3Id">產品小分類</label>
+            <label for="category3Id">產品小分類</label>
+            <div class="form-inline">
               <input
                 type="text"
                 class="form-control"
@@ -113,8 +113,8 @@
                 name="category3Name"
                 v-model="category3Name"
               />
+              <button type="submit" class="btn btn-info">Submit</button>
             </div>
-            <button type="submit" class="btn btn-info">Submit</button>
           </div>
         </form>
       </div>

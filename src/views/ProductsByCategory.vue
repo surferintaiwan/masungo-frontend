@@ -15,10 +15,12 @@
               <h5 class="card-title">{{ product.name }}</h5>
             </router-link>
             <p>NT. {{ product.sellingPrice }}</p>
-            <a href="#" class="btn btn-primary">直接購買</a>
-            <form action>
-              <button type="submit" class="btn btn-primary">加入購物車</button>
-            </form>
+            <div class="row">
+              <a href="#" class="btn btn-primary">購買</a>
+              <form action>
+                <button type="submit" class="btn btn-primary ml-2">加入購物車</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -62,7 +64,6 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    console.log(777, to.query);
     this.getProductsByCategory(to.query);
     next();
   }
