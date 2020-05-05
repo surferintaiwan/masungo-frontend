@@ -22,14 +22,6 @@ import { mapState } from "vuex";
 
 export default {
   name: "App",
-  created() {
-    let dropDown = document.createElement("script");
-    dropDown.setAttribute(
-      "src",
-      "https://bootstrapthemes.co/demo/resource/bootstrap-4-multi-dropdown-navbar/js/bootstrap-4-navbar.js"
-    );
-    document.head.appendChild(dropDown);
-  },
   components: {
     Navbar,
     CategoryTabs,
@@ -42,6 +34,3 @@ export default {
 };
 </script>
 
-<style  scoped>
-@import url("https://bootstrapthemes.co/demo/resource/bootstrap-4-multi-dropdown-navbar/css/bootstrap-4-navbar.css");
-</style>
