@@ -112,12 +112,6 @@ const routes = [
         beforeEnter: authorizeIsAdmin
     },
     {
-        path: '/admin/products/:productId',
-        name: 'admin-product-detail',
-        component: () => import('../views/admin/ProductDetail'),
-        beforeEnter: authorizeIsAdmin
-    },
-    {
         path: '/admin/products/:productId/edit',
         name: 'admin-product-edit',
         component: () => import('../views/admin/ProductEdit'),

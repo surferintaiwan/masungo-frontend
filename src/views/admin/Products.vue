@@ -25,10 +25,6 @@
 
           <td>
             <router-link
-              class="btn btn-info mr-2"
-              v-bind:to="{name: 'admin-product-detail', params: {productId: product.id}}"
-            >查看</router-link>
-            <router-link
               class="btn btn-info"
               v-bind:to="{name: 'admin-product-edit', params: {productId: product.id}}"
             >編輯</router-link>
