@@ -35,14 +35,21 @@
               type="submit"
               class="btn btn-info mr-2"
               v-on:click="addCartItem(product.id)"
+              v-bind:disable="isProcessing"
             >加入購物車</button>
             <button v-else class="btn btn-danger mr-2">商品缺貨中</button>
             <button
               v-if="product.isFollowed"
-              class="btn btn-warning"
-              v-on:click="handleDelete(product.id)"
+              class="btn btn-danger"
+              v-on:click="deleteFollowing(product.id)"
+              v-bind:disable="isProcessing"
             >取消追蹤</button>
-            <button v-else class="btn btn-warning" v-on:click="handleAdd(product.id)">加入追蹤</button>
+            <button
+              v-else
+              class="btn btn-warning"
+              v-on:click="addFollowing(product.id)"
+              v-bind:disable="isProcessing"
+            >加入追蹤</button>
           </div>
         </div>
       </div>
@@ -167,11 +174,6 @@ export default {
     async addCartItem(productId) {
       try {
         this.isProcessing = true;
-
-        // 先判斷數字是合法的，1-1000之間的數量才會送出去
-        if (1 < this.amount < 1001) {
-          console.log(123);
-        }
         // 取出瀏覽器上的cartId，如果瀏覽器上沒有會是null，打給API會產生新的cartId
         const cartId = localStorage.getItem("cartId");
         let response = await cartsAPI.addCartItem({
@@ -200,7 +202,7 @@ export default {
         console.log(error);
       }
     },
-    async handleAdd(productId) {
+    async addFollowing(productId) {
       try {
         this.isProcessing = true;
         let response = await usersAPI.addFollowingProduct({ productId });
@@ -223,7 +225,7 @@ export default {
         this.isProcessing = false;
       }
     },
-    async handleDelete(productId) {
+    async deleteFollowing(productId) {
       try {
         this.isProcessing = true;
         let response = await usersAPI.deleteFollowingProduct({ productId });
