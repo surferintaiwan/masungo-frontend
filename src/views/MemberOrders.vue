@@ -2,13 +2,25 @@
   <div class="container py-5">
     <MemberTabs />
     <template v-if="orders.length">
-      <div v-for="order in orders" v-bind:key="order.id" class="md-4">
-        <h6>訂單編號 {{order.id}}</h6>
-        <h6>訂購時間 {{order.createdAt}}</h6>
+      <div v-for="order in orders" v-bind:key="order.id" class="md-2">
+        <div class="row">
+          <h5 class="col-2">訂單編號:{{order.id}}</h5>
+          <h5 class="col-5">訂購時間: {{order.createdAt}}</h5>
+          <h5 class="col-5">
+            訂單狀態: {{order.OrderStatus.name}}
+            <span v-if="order.OrderStatusId === 1">
+              <router-link
+                v-bind:to="{name:'checkout-payment', params:{orderId: order.id}}"
+                class="btn btn-info"
+              >前往付款</router-link>
+            </span>
+          </h5>
+        </div>
+
         <table class="table">
           <thead>
             <tr>
-              <th scope="col"></th>
+              <th scope="col">產品照片</th>
               <th scope="col">產品名稱</th>
               <th scope="col">售價</th>
               <th scope="col">數量</th>
