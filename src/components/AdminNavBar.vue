@@ -18,6 +18,9 @@
           <li class="nav-item">
             <router-link class="nav-link text-warning" to="/admin/categories">商品分類管理</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link text-warning" to="/admin/brands">品牌管理</router-link>
+          </li>
         </ul>
       </div>
 

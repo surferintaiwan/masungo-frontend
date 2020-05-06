@@ -70,5 +70,42 @@ export default {
                 Authorization: `Bearer ${getToken()}`
             }
         })
+    },
+    getAllBrands() {
+        return apiHelper.get('/admin/brands', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
+    },
+    addBrand({ brandName }) {
+        return apiHelper.post(
+            '/admin/brands',
+            { brandName },
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        )
+    },
+    updateBrand({ brandName, brandId }) {
+        return apiHelper.put(
+            '/admin/brands',
+            { brandName, brandId },
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        )
+    },
+    deleteBrand({ brandId }) {
+        return apiHelper.delete('/admin/brands', {
+            params: { brandId },
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
     }
 }

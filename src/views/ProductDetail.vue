@@ -31,10 +31,12 @@
               <p>(最多可購買1000個，更大量訂單請聯繫客服，謝謝!)</p>
             </div>
             <button
+              v-if="product.inventory"
               type="submit"
               class="btn btn-info mr-2"
               v-on:click="addCartItem(product.id)"
             >加入購物車</button>
+            <button v-else class="btn btn-danger mr-2">商品缺貨中</button>
             <button
               v-if="product.isFollowed"
               class="btn btn-warning"
