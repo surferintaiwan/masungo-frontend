@@ -57,6 +57,26 @@ export default {
             }
         )
     },
+    updateCategory({ formData, query }) {
+        const rebuiltQuery = new URLSearchParams(query)
+        return apiHelper.put(
+            `/admin/categories?${rebuiltQuery.toString()}`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        )
+    },
+    deleteCategory({ whichCategory, categoryId }) {
+        return apiHelper.delete(`/admin/categories`, {
+            params: { whichCategory, categoryId },
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
+    },
     getAllMembers() {
         return apiHelper.get('/admin/members', {
             headers: {
