@@ -3,7 +3,7 @@
     <router-link to="/">
       <img src="../../public/logo.png" alt="馬上購LOGO" />
     </router-link>
-    <form action="/search">
+    <form v-on:submit.stop.prevent="searchSubmit">
       <div class="input-group mb-3">
         <input
           type="text"
@@ -11,6 +11,7 @@
           class="form-control"
           placeholder="輸入商品關鍵字"
           aria-describedby="search-button"
+          v-model="keyword"
         />
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit" id="search-button">Search</button>
@@ -37,8 +38,18 @@
 import { mapState } from "vuex";
 export default {
   name: "Navbar",
+  data() {
+    return {
+      keyword: ""
+    };
+  },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
+  },
+  methods: {
+    searchSubmit() {
+      this.$emit("after-search-submit", this.keyword);
+    }
   }
 };
 </script>
