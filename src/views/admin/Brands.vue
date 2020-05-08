@@ -105,9 +105,9 @@ export default {
             throw new Error(statusText);
           }
           // 為了減少馬上去後端要資料時後端的負擔，直接在前端針對data做更新就好(我有讓後端在建立品牌時順便傳了brand整包回來讓我用)
-          this.brands = this.brands.push(data.brand);
-          console.log(data.brand);
-          console.log(this.brands); // 值竟然變成陣列的長度
+          const brands = [...this.brands];
+          brands.push({ ...data.brand, Products: [] });
+          this.brands = brands;
           Toast.fire({
             icon: "success",
             title: "品牌新增成功"
