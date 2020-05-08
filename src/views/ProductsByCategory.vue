@@ -1,11 +1,26 @@
 <template>
   <div class="container py-5">
     <p>麵包屑 商品大分類>商品中分類>商品小分類</p>
-    <select name="brand" v-on:change="chooseBrand($event)">
-      <option value selected>全部</option>>
-      <option v-for="brand in brands" v-bind:key="brand.id" v-bind:value="brand.id">{{brand.name}}</option>
-    </select>
-    <div class="row">
+    <div class="container">
+      <div class="row justify-content-between">
+        <select name="brand" v-on:change="chooseBrand($event)">
+          <option value selected>全部</option>>
+          <option
+            v-for="brand in brands"
+            v-bind:key="brand.id"
+            v-bind:value="brand.id"
+          >{{brand.name}}</option>
+        </select>
+        <select name="sort" v-on:change="chooseSort($event)">
+          <option disabled value selected>請選擇排序方式</option>>
+          <option value="sellingPriceDESC">售價:高->低</option>
+          <option value="sellingPriceASC">售價:低->高</option>
+          <option value="createdAtDESC">最新商品在前</option>
+          <option value="createdAtASC">最新商品在後</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-2">
       <div class="col-3" v-for="product in products" v-bind:key="product.id">
         <div class="card" style>
           <img v-bind:src="product.image1" class="card-img-top" alt />
@@ -41,6 +56,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import productsAPI from "../apis/products";
@@ -122,6 +138,15 @@ export default {
     chooseBrand(event) {
       const routerQuery = { ...this.$route.query };
       routerQuery["brandId"] = event.target.value;
+
+      this.$router.push({
+        name: "products-by-category",
+        query: routerQuery
+      });
+    },
+    chooseSort(event) {
+      const routerQuery = { ...this.$route.query };
+      routerQuery["sort"] = event.target.value;
 
       this.$router.push({
         name: "products-by-category",
