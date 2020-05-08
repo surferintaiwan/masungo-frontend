@@ -1,9 +1,9 @@
 <template>
   <div class="container py-5">
     <p>麵包屑 商品大分類>商品中分類>商品小分類</p>
-    <select name="brand" v-on:change="handleClick($event)">
-      <option value="1">Nike</option>
-      <option value="2">Puma</option>
+    <select name="brand" v-on:change="chooseBrand($event)">
+      <option value selected>全部</option>>
+      <option v-for="brand in brands" v-bind:key="brand.id" v-bind:value="brand.id">{{brand.name}}</option>
     </select>
     <div class="row">
       <div class="col-3" v-for="product in products" v-bind:key="product.id">
@@ -50,11 +50,13 @@ import { Toast } from "../utils/helpers";
 export default {
   data() {
     return {
-      products: []
+      products: [],
+      brands: []
     };
   },
   created() {
     this.getProductsByCategory(this.$route.query);
+    this.getAllBrands(this.$route.query);
   },
   methods: {
     async getProductsByCategory(query) {
@@ -69,13 +71,55 @@ export default {
         console.log(error);
       }
     },
-    handleClick(event) {
-      const brandId = event.target.value;
-      const category1Id = this.$route.query.category1Id;
+    async getAllBrands(query) {
+      try {
+        // 因為呼叫這支函式時傳入的query是瀏覽器網址列上的，接著就要判斷query裡面所帶的是大類、中類、小類，才分別帶不同東西去給後端API要資料回來
+        let whichCategory = "";
+        let categoryId = null;
+        // 代表現在瀏覽器是在大類商品分類頁的話
+        if (query.category1Id) {
+          whichCategory = "category1";
+          categoryId = query.category1Id;
+        } else if (query.category2Id) {
+          // 代表現在瀏覽器是在中類商品分類頁的話
+          whichCategory = "category2";
+          categoryId = query.category2Id;
+        } else if (query.category3Id) {
+          // 代表現在瀏覽器是在小類商品分類頁的話
+          whichCategory = "category3";
+          categoryId = query.category3Id;
+        }
+        let response = await productsAPI.getAllBrands({
+          whichCategory,
+          categoryId
+        });
+        const { data, statusText } = response;
 
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        console.log(data.brands);
+        this.brands = data.brands;
+      } catch (error) {
+        Toast.fire({ icon: "error", title: "無法獲取該類別品牌資料" });
+      }
+    },
+    chooseBrand(event) {
+      const routerQuery = {};
+      routerQuery["brandId"] = event.target.value;
+      const category1Id = this.$route.query.category1Id;
+      const category2Id = this.$route.query.category2Id;
+      const category3Id = this.$route.query.category3Id;
+      if (category1Id) {
+        routerQuery["category1Id"] = category1Id;
+      } else if (category2Id) {
+        routerQuery["category2Id"] = category2Id;
+      } else if (category3Id) {
+        routerQuery["category3Id"] = category3Id;
+      }
       this.$router.push({
         name: "products-by-category",
-        query: { category1Id: category1Id, brandId: brandId }
+        query: routerQuery
       });
     },
     async addCartItem(productId) {
@@ -170,6 +214,7 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     this.getProductsByCategory(to.query);
+    this.getAllBrands(to.query);
     next();
   }
 };
