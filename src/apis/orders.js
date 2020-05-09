@@ -15,5 +15,12 @@ export default {
                 Authorization: `Bearer ${getToken()}`
             }
         })
+    },
+    getOrderFinish({ orderId }) {
+        return apiHelper.get(`/checkout/finish/${orderId}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
     }
 }

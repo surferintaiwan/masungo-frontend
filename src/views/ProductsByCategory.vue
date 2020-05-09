@@ -57,7 +57,6 @@
   </div>
 </template>
 
-
 <script>
 import productsAPI from "../apis/products";
 import cartsAPI from "../apis/carts";

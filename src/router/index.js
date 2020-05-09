@@ -58,6 +58,11 @@ const routes = [
         component: () => import('../views/CheckOutPayment')
     },
     {
+        path: '/checkout/finish/:orderId',
+        name: 'checkout-finish',
+        component: () => import('../views/CheckOutFinish')
+    },
+    {
         path: '/member',
         name: 'member-index',
         redirect: '/member/orders'
