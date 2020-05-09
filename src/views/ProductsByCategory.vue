@@ -69,22 +69,6 @@ export default {
       brands: []
     };
   },
-  props: {
-    keyword: { type: String } // 因為NavBar跟ProductsByCateogry是同一層級，好像沒辦法彼此直接傳送資料，所以這個keyword是從NavBar送到App.vue再送下來的
-  },
-  watch: {
-    // 監控keyword資料有傳進來時，就把keyword塞到目前網址列上的query裡面
-    // ，因為是把整個目前網址列上的query拿下來加工塞進keyword，所以也不用擔心網址列的category1Id、category2Id、category3Id、brandId是不是沒帶到
-    keyword(keyword) {
-      const routerQuery = { ...this.$route.query };
-      routerQuery["keyword"] = keyword;
-
-      this.$router.push({
-        name: "products-by-category",
-        query: routerQuery
-      });
-    }
-  },
   created() {
     this.getProductsByCategory(this.$route.query);
     this.getAllBrands(this.$route.query);

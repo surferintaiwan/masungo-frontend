@@ -48,7 +48,10 @@ export default {
   },
   methods: {
     searchSubmit() {
-      this.$emit("after-search-submit", this.keyword);
+      this.$router.push({
+        name: "products-by-category",
+        query: { keyword: this.keyword }
+      });
     }
   }
 };

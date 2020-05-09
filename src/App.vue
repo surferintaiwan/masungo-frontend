@@ -4,7 +4,7 @@
     <AdminNavbar v-if="wantToGoAdminPage" />
     <main class="mt-5" role="main">
       <CategoryTabs v-if="wantToGoAdminPage === false" />
-      <router-view v-bind:keyword="keyword" />
+      <router-view />
     </main>
     <external-script
       src="https://bootstrapthemes.co/demo/resource/bootstrap-4-multi-dropdown-navbar/js/bootstrap-4-navbar.js"
@@ -36,11 +36,6 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
     ...mapState(["wantToGoAdminPage"]) // 從Vuex取出來判斷是不是要顯示前台的NavBar跟CategoryTabs
-  },
-  methods: {
-    afterSearchSubmit(keyword) {
-      this.keyword = keyword;
-    }
   },
   mounted() {
     $(document).ready(function() {
