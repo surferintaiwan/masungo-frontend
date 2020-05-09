@@ -1,8 +1,8 @@
 <template>
   <div class="container py-5">
-    <h1>訂單完成頁</h1>
+    <h1>訂單付款完成頁</h1>
     <template v-if="order.OrderStatusId === 2">
-      <p class="text-danger">謝謝您的訂購，訂單已經成立</p>
+      <p class="text-danger">謝謝您的訂購，訂單付款完成</p>
       <form>
         <div class="form-group">
           <label for="address">訂單編號:</label>
