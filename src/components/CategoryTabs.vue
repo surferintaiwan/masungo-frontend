@@ -1,42 +1,84 @@
 <template>
   <div class="container pt-5">
     <ul class="nav nav-tabs">
-      <li v-for="tab in tabs" v-bind:key="tab.id" class="nav-item">
+      <li v-for="category1 in category1s" v-bind:key="category1.id" class="nav-item">
         <router-link
           v-bind:to="{
                         name: 'products-by-category',
-                        query: { category1Id: tab.id }
+                        query: { category1Id: category1.id }
                     }"
           class="nav-link"
-        >{{ tab.name }}</router-link>
+        >{{ category1.name }}</router-link>
       </li>
       <li>
         <nav class="navbar navbar-expand-md navbar-light bg-light">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">
-                  Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+              <li
+                v-for="category1 in category1s"
+                v-bind:key="category1.id"
+                class="nav-item dropdown active"
+              >
+                <router-link
+                  class="nav-link dropdown-toggle"
+                  href="https://bootstrapthemes.co"
+                  id="navbarDropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  v-bind:to="{
+                        name: 'products-by-category',
+                        query: { category1Id: category1.id }
+                    }"
+                >{{ category1.name }}</router-link>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li v-for="category2 in category1.Category2s" v-bind:key="category2.id">
+                    <router-link
+                      class="dropdown-item"
+                      href="#"
+                      v-bind:to="{
+                        name: 'products-by-category',
+                        query: { category2Id: category2.id }
+                    }"
+                    >{{category2.name}}</router-link>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Another action</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" href="#">Submenu action</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">Another submenu action</a>
+                      </li>
+
+                      <li>
+                        <a class="dropdown-item" href="#">Second subsubmenu</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" href="#">Submenu action 2</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">Another submenu action 2</a>
+                      </li>
+
+                      <li>
+                        <a class="dropdown-item" href="#">Subsubmenu</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">Second subsubmenu 3</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
               </li>
               <li class="nav-item dropdown">
                 <a
@@ -65,26 +107,7 @@
                       </li>
 
                       <li>
-                        <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a class="dropdown-item" href="#">Subsubmenu action aa</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">Another subsubmenu action</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a class="dropdown-item" href="#">Subsubmenu action bb</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">Another subsubmenu action</a>
-                          </li>
-                        </ul>
+                        <a class="dropdown-item" href="#">Second subsubmenu</a>
                       </li>
                     </ul>
                   </li>
@@ -99,26 +122,10 @@
                       </li>
 
                       <li>
-                        <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a class="dropdown-item" href="#">Subsubmenu action 1 3</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">Another subsubmenu action 2 3</a>
-                          </li>
-                        </ul>
+                        <a class="dropdown-item" href="#">Subsubmenu</a>
                       </li>
                       <li>
-                        <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu 3</a>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a class="dropdown-item" href="#">Subsubmenu action 3</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">Another subsubmenu action 3</a>
-                          </li>
-                        </ul>
+                        <a class="dropdown-item" href="#">Second subsubmenu 3</a>
                       </li>
                     </ul>
                   </li>
@@ -138,7 +145,7 @@ import { Toast } from "../utils/helpers";
 export default {
   data() {
     return {
-      tabs: []
+      category1s: []
     };
   },
   created() {
@@ -152,7 +159,7 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.tabs = data.categories;
+        this.category1s = data.category1s;
       } catch (error) {
         Toast.fire({
           icon: "error",

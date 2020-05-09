@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>首頁</h1>
-    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -9,13 +8,25 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="d-block w-100" src="..." alt="First slide" />
+          <img
+            class="d-block w-100"
+            src="https://img1.momoshop.com.tw/ecm/img/online/10/999/00/000/bt_0_247_01/bt_0_247_01_P1_13_e2.jpg?t=1589004003903"
+            alt="First slide"
+          />
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="..." alt="Second slide" />
+          <img
+            class="d-block w-100"
+            src="https://img1.momoshop.com.tw/ecm/img/online/10/999/00/000/bt_0_247_01/bt_0_247_01_P1_11_e2.jpg?t=1589004003903"
+            alt="Second slide"
+          />
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="..." alt="Third slide" />
+          <img
+            class="d-block w-100"
+            src="https://img2.momoshop.com.tw/ecm/img/online/10/999/00/000/bt_0_247_01/bt_0_247_01_P1_12_e2.jpg?t=1589040017026"
+            alt="Third slide"
+          />
         </div>
       </div>
       <a
@@ -36,7 +47,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-    </div>-->
+    </div>
   </div>
 </template>
 
