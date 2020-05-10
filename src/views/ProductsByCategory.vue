@@ -1,6 +1,10 @@
 <template>
   <div class="container py-5">
-    <p>麵包屑 商品大分類>商品中分類>商品小分類</p>
+    <p>
+      <span v-if="categories.category1" class="text-info">{{categories.category1.name}}</span>
+      <span v-if="categories.category2" class="text-info">> {{categories.category2.name}}</span>
+      <span v-if="categories.category3" class="text-info">> {{categories.category3.name}}</span>
+    </p>
     <div class="container">
       <div class="row justify-content-between">
         <select name="brand" v-on:change="chooseBrand($event)">
@@ -66,7 +70,8 @@ export default {
   data() {
     return {
       products: [],
-      brands: []
+      brands: [],
+      categories: {}
     };
   },
   created() {
@@ -82,6 +87,8 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
+        console.log(data);
+        this.categories = data.categories;
       } catch (error) {
         console.log(error);
       }

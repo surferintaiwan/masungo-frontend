@@ -1,14 +1,11 @@
 <template>
   <div id="masungo-frontend">
-    <Navbar v-if="wantToGoAdminPage === false" v-on:after-search-submit="afterSearchSubmit" />
+    <Navbar v-if="wantToGoAdminPage === false" />
     <AdminNavbar v-if="wantToGoAdminPage" />
     <main class="mt-5" role="main">
       <CategoryTabs v-if="wantToGoAdminPage === false" />
       <router-view />
     </main>
-    <external-script
-      src="https://bootstrapthemes.co/demo/resource/bootstrap-4-multi-dropdown-navbar/js/bootstrap-4-navbar.js"
-    ></external-script>
   </div>
 </template>
 

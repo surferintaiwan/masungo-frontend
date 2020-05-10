@@ -40,10 +40,10 @@ export default {
     };
   },
   created() {
-    this.getAllMembers();
+    this.getAllOrders();
   },
   methods: {
-    async getAllMembers() {
+    async getAllOrders() {
       try {
         let response = await adminsAPI.getAllOrders();
         const { data, statusText } = response;
