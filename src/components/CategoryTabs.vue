@@ -33,7 +33,7 @@
                     }"
                     >{{category2.name}}</router-link>
                   </li>
-                  <li>
+                  <!-- <li>
                     <a class="dropdown-item" href="#">Another action</a>
                   </li>
                   <li>
@@ -68,10 +68,10 @@
                         <a class="dropdown-item" href="#">Second subsubmenu 3</a>
                       </li>
                     </ul>
-                  </li>
+                  </li>-->
                 </ul>
               </li>
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   href="https://bootstrapthemes.co"
@@ -121,7 +121,7 @@
                     </ul>
                   </li>
                 </ul>
-              </li>
+              </li>-->
             </ul>
           </div>
         </nav>
