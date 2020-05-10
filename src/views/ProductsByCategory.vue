@@ -1,6 +1,9 @@
 <template>
   <div class="container py-5">
-    <p>麵包屑 商品大分類>商品中分類>商品小分類</p>
+    <p>
+      麵包屑
+      <span></span> 商品大分類>商品中分類>商品小分類
+    </p>
     <div class="container">
       <div class="row justify-content-between">
         <select name="brand" v-on:change="chooseBrand($event)">
@@ -12,7 +15,7 @@
           >{{brand.name}}</option>
         </select>
         <select name="sort" v-on:change="chooseSort($event)">
-          <option disabled value selected>請選擇排序方式</option>>
+          <option disabled value selected>請選擇排序方式</option>
           <option value="sellingPriceDESC">售價:高->低</option>
           <option value="sellingPriceASC">售價:低->高</option>
           <option value="createdAtDESC">最新商品在前</option>
@@ -66,7 +69,10 @@ export default {
   data() {
     return {
       products: [],
-      brands: []
+      brands: [],
+      category1Name: "",
+      category2Name: "",
+      category3Name: ""
     };
   },
   created() {
