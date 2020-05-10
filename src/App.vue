@@ -5,6 +5,7 @@
     <main class="mt-5" role="main">
       <CategoryTabs v-if="wantToGoAdminPage === false" />
       <router-view />
+      <Footer v-if="wantToGoAdminPage ===false" />
     </main>
   </div>
 </template>
@@ -15,6 +16,7 @@ import "bootstrap";
 import Navbar from "./components/NavBar";
 import AdminNavbar from "./components/AdminNavBar";
 import CategoryTabs from "./components/CategoryTabs";
+import Footer from "./components/Footer";
 import { mapState } from "vuex";
 import $ from "jquery";
 
@@ -28,7 +30,8 @@ export default {
   components: {
     Navbar,
     CategoryTabs,
-    AdminNavbar
+    AdminNavbar,
+    Footer
   },
   computed: {
     ...mapState(["currentUser"]),
