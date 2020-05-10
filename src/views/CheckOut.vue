@@ -24,15 +24,6 @@
           />
           <label class="form-check-label" for="storePickUp">超商取貨</label>
         </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="deliveryMethodId"
-            id="homeDelivery"
-            value="2"
-          />
-        </div>
       </div>
       <div class="form-group">
         付款方式:
