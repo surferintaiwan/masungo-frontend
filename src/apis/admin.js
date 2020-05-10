@@ -91,6 +91,17 @@ export default {
             }
         })
     },
+    updateOrderShipped(orderId) {
+        return apiHelper.put(
+            `/admin/orders/${orderId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        )
+    },
     getAllBrands() {
         return apiHelper.get('/admin/brands', {
             headers: {
