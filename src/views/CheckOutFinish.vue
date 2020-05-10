@@ -1,7 +1,8 @@
 <template>
   <div class="container py-5">
     <h1>訂單付款完成頁</h1>
-    <template v-if="order.OrderStatusId === 2">
+    <!-- <template v-if="order.OrderStatusId === 2"> 本來是2，但因為上了heroku會跳號，要改成11才是訂單處理中的狀態-->
+    <template v-if="order.OrderStatusId === 11">
       <p class="text-danger">謝謝您的訂購，訂單付款完成</p>
       <form>
         <div class="form-group">
