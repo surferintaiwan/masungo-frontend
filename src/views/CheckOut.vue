@@ -32,7 +32,6 @@
             id="homeDelivery"
             value="2"
           />
-          <label class="form-check-label" for="homeDelivery">宅配</label>
         </div>
       </div>
       <div class="form-group">

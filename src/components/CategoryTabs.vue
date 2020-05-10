@@ -1,15 +1,6 @@
 <template>
   <div class="container pt-5">
     <ul class="nav nav-tabs">
-      <li v-for="category1 in category1s" v-bind:key="category1.id" class="nav-item">
-        <router-link
-          v-bind:to="{
-                        name: 'products-by-category',
-                        query: { category1Id: category1.id }
-                    }"
-          class="nav-link"
-        >{{ category1.name }}</router-link>
-      </li>
       <li>
         <nav class="navbar navbar-expand-md navbar-light bg-light">
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
