@@ -12,7 +12,6 @@
               >
                 <router-link
                   class="nav-link dropdown-toggle"
-                  href="https://bootstrapthemes.co"
                   id="navbarDropdownMenuLink"
                   data-toggle="dropdown"
                   aria-haspopup="true"
@@ -25,29 +24,39 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li v-for="category2 in category1.Category2s" v-bind:key="category2.id">
                     <router-link
-                      class="dropdown-item"
-                      href="#"
+                      class="dropdown-item dropdown-toggle"
                       v-bind:to="{
                         name: 'products-by-category',
                         query: { category2Id: category2.id }
                     }"
                     >{{category2.name}}</router-link>
+                    <ul class="dropdown-menu">
+                      <li v-for="category3 in category2.Category3s" v-bind:key="category3.id">
+                        <router-link
+                          class="dropdown-item"
+                          v-bind:to="{
+                        name: 'products-by-category',
+                        query: { category3Id: category3.id }
+                    }"
+                        >{{category3.name}}</router-link>
+                      </li>
+                    </ul>
                   </li>
-                  <!-- <li>
+                  <li>
                     <a class="dropdown-item" href="#">Another action</a>
                   </li>
                   <li>
                     <a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a class="dropdown-item" href="#">Submenu action</a>
+                        <a class="dropdown-item dropdown-toggle" href="#">Submenu actiontion</a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="#">Another submenu action</a>
+                        <a class="dropdown-item dropdown-toggle" href="#">Another submenu action</a>
                       </li>
 
                       <li>
-                        <a class="dropdown-item" href="#">Second subsubmenu</a>
+                        <a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
                       </li>
                     </ul>
                   </li>
@@ -68,10 +77,10 @@
                         <a class="dropdown-item" href="#">Second subsubmenu 3</a>
                       </li>
                     </ul>
-                  </li>-->
+                  </li>
                 </ul>
               </li>
-              <!-- <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   href="https://bootstrapthemes.co"
@@ -121,7 +130,7 @@
                     </ul>
                   </li>
                 </ul>
-              </li>-->
+              </li>
             </ul>
           </div>
         </nav>
